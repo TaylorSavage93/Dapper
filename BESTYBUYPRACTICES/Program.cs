@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System.Data;
+using Dapper;
 
 var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -34,3 +35,12 @@ if (userResponse.ToLower() == "yes")
     repo.InsertDepartment(userResponse);
 }
 Console.WriteLine("Thank you have a nice day.");
+
+
+var repo1 = new DapperProductRepository(conn);
+var products = repo1.GetAllProducts();
+
+foreach (var prod in products)
+{
+    Console.WriteLine($"{prod.CategoryID} {prod.Name}");
+}
